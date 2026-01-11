@@ -15,11 +15,17 @@ def crossover(p1, p2):
 def generate_population(size, length):
     return [[random.randint(0, 20) for _ in range(length)] for _ in range(size)]
 
+# Helper to show the math
+def format_equation(coeffs, variables):
+    terms = []
+    for c, v in zip(coeffs, variables):
+        terms.append(f"{c}({v})")
+    return " + ".join(terms).replace("+ -", "- ")
+
 # --- Streamlit UI Setup ---
-st.set_page_config(page_title="Genetic Solver", layout="wide")
+st.set_page_config(page_title="GA Solver", layout="wide")
 st.title("🧬 Genetic Algorithm Solver")
 
-# Sidebar for Inputs (replacing tkinter entry fields)
 with st.sidebar:
     st.header("Parameters")
     coeffs_str = st.text_input("Coefficients (space-separated):", "3 2 -1")
@@ -29,38 +35,45 @@ with st.sidebar:
     max_gen = st.number_input("Max Generations:", value=100)
     run_btn = st.button("Start Algorithm")
 
-# --- Logic Execution ---
+# --- Execution ---
 if run_btn:
     coeffs = list(map(int, coeffs_str.split()))
     population = generate_population(pop_size, len(coeffs))
     best_fit_history = []
     
-    # Placeholder for live updates
+    progress_bar = st.progress(0)
     status = st.empty()
     
     for gen in range(max_gen):
         fitness_scores = [fitness_function(c, coeffs, target_val) for c in population]
-        best_fit = min(fitness_scores)
-        best_fit_history.append(best_fit)
+        best_idx = fitness_scores.index(min(fitness_scores))
+        best_candidate = population[best_idx]
+        best_fit = fitness_scores[best_idx]
         
+        best_fit_history.append(best_fit)
+        progress_bar.progress((gen + 1) / max_gen)
         status.write(f"**Generation {gen+1}:** Best Fitness = `{best_fit}`")
         
         if best_fit == 0:
-            st.success(f"🎯 Solution Found at Gen {gen+1}!")
+            math_str = format_equation(coeffs, best_candidate)
+            st.success(f"🎯 **Solution Found at Gen {gen+1}!**")
+            st.code(f"{math_str} = {target_val}", language="python") # Displays equation clearly
             break
 
-        # Standard GA Selection/Crossover/Mutation
-        population = [x for _, x in sorted(zip(fitness_scores, population))][:pop_size // 2]
+        # Selection/Crossover/Mutation logic
+        sorted_pop = [x for _, x in sorted(zip(fitness_scores, population))]
+        parents = sorted_pop[:pop_size // 2]
         new_pop = []
         while len(new_pop) < pop_size:
-            p1, p2 = random.sample(population, 2)
+            p1, p2 = random.sample(parents, 2)
             new_pop.append(mutate(crossover(p1, p2), mut_rate))
         population = new_pop
 
-    # Plotting (replacing FigureCanvasTkAgg)
+    # Plotting Results
     fig, ax = plt.subplots()
-    ax.plot(best_fit_history, label="Best Fitness")
+    ax.plot(best_fit_history, label="Error (Fitness)")
     ax.set_title("Fitness Over Generations")
     ax.set_xlabel("Generation")
     ax.set_ylabel("Error")
+    ax.grid(True)
     st.pyplot(fig)

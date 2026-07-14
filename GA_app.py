@@ -118,4 +118,4 @@ if run_btn:
     ax.set_ylabel("Error")
     ax.legend()
     ax.grid(True)
-   st.pyplot(fig, use_container_width=True)
+    st.pyplot(fig, use_container_width=True)

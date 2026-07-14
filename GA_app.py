@@ -28,7 +28,7 @@ def format_equation(coeffs, variables):
 
 # --- Streamlit UI Setup ---
 st.set_page_config(page_title="GA Solver", layout="wide")
-st.title("🧬 Genetic Algorithm Solver")
+st.title(" Genetic Algorithm Solver")
 
 with st.sidebar:
     st.header("Parameters")
@@ -86,7 +86,7 @@ if run_btn:
 
         if best_ever_fit == 0:
             math_str = format_equation(coeffs, best_ever_candidate)
-            st.success(f"🎯 **Solution Found at Gen {gen + 1}!**")
+            st.success(f" **Solution Found at Gen {gen + 1}!**")
             st.code(f"{math_str} = {target_val}", language="python")
             solved = True
             break
@@ -104,7 +104,7 @@ if run_btn:
 
     if not solved:
         math_str = format_equation(coeffs, best_ever_candidate)
-        st.warning(f"⚠️ **No exact solution found within {max_gen} generations.**")
+        st.warning(f" **No exact solution found within {max_gen} generations.**")
         st.write(f"Closest result: `{math_str} = {sum(c * x for c, x in zip(coeffs, best_ever_candidate))}` "
                  f"(target was `{target_val}`, error `{best_ever_fit}`)")
 

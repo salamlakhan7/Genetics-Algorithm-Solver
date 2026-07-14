@@ -109,7 +109,7 @@ if run_btn:
                  f"(target was `{target_val}`, error `{best_ever_fit}`)")
 
     # Plotting Results
-    fig, ax = plt.subplots()
+    #fig, ax = plt.subplots()
     fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(best_fit_history, label="Best Fitness (Error)")
     ax.plot(avg_fit_history, label="Average Fitness (Error)", linestyle="--")

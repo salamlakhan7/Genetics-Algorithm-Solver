@@ -110,6 +110,7 @@ if run_btn:
 
     # Plotting Results
     fig, ax = plt.subplots()
+    fig, ax = plt.subplots(figsize=(10, 5))
     ax.plot(best_fit_history, label="Best Fitness (Error)")
     ax.plot(avg_fit_history, label="Average Fitness (Error)", linestyle="--")
     ax.set_title("Fitness Over Generations")
@@ -117,4 +118,4 @@ if run_btn:
     ax.set_ylabel("Error")
     ax.legend()
     ax.grid(True)
-    st.pyplot(fig)
+   st.pyplot(fig, use_container_width=True)

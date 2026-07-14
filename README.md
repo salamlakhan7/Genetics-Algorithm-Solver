@@ -1,65 +1,59 @@
+#  Genetic Algorithm Solver
 
-```markdown
-# 🧬 Genetic Algorithm Solver
-
-A web-based tool built with **Streamlit** that uses Genetic Algorithms to solve linear equations of the form:
-`ax + by + cz + ... = Target`
-
-## 🚀 Live Demo
-[Insert your Streamlit URL here]
-
-## ✨ Features
-* **Custom Coefficients**: Input any number of variables.
-* **Real-time Evolution**: Watch the population evolve through a progress bar and live fitness chart.
-* **Adjustable Parameters**: Fine-tune Population Size, Mutation Rate, and Max Generations.
-* **Interactive Visualization**: Line charts showing Best vs. Average fitness convergence.
-
-## 🛠️ Installation & Local Setup
-1. Clone the repository:
-   ```bash
-   git clone [https://github.com/YOUR_USERNAME/Genetics-Algorithm-Solver.git](https://github.com/salamlakhan7/Genetics-Algorithm-Solver.git)
+A Streamlit app that uses a genetic algorithm to solve linear equations of the form:
 
 ```
+a·x + b·y + c·z + ... = Target
+```
 
-2. Install dependencies:
+Given a set of coefficients and a target value, the algorithm evolves a population of candidate solutions over generations - selecting, combining, and mutating them - until it finds integer values that satisfy the equation.
+
+##  Live Demo
+
+[Add your Streamlit Cloud URL here once deployed]
+
+##  Features
+
+- **Custom equations** - enter any number of coefficients
+- **Adjustable parameters** - population size, mutation rate, max generations
+- **Elitism** - the best candidate found is always carried into the next generation, so progress is never lost
+- **Live convergence chart** - tracks both best and average population fitness over time
+- **Real-time feedback** - progress bar and per-generation status updates
+
+##  How It Works
+
+1. **Initial population** - random integer candidates are generated
+2. **Fitness function** - measures how far each candidate's result is from the target (lower is better, 0 = solved)
+3. **Elitism** - the best candidate from the current generation is preserved into the next
+4. **Selection** - the top-performing candidates are kept as parents
+5. **Crossover** - parent values are combined to produce new candidates
+6. **Mutation** - occasional random tweaks are introduced to maintain diversity and avoid getting stuck
+
+The process repeats until either a candidate reaches zero error (an exact solution) or the maximum number of generations is reached, at which point the closest solution found is shown.
+
+##  Installation & Local Setup
+
+Clone the repository:
+```bash
+git clone https://github.com/salamlakhan7/Genetics-Algorithm-Solver.git
+cd Genetics-Algorithm-Solver
+```
+
+Install dependencies:
 ```bash
 pip install -r requirements.txt
-
 ```
 
-
-3. Run the app:
+Run the app:
 ```bash
 streamlit run GA_app.py
-
 ```
 
+##  Known Limitations
 
+- Candidate values are currently sampled from a fixed integer range, so very large or negative-only solutions may not be reachable without adjusting the code
+- Designed for linear equations; not currently built for quadratic or non-linear targets
 
-## 🧬 How it Works
+##  Author
 
-1. **Initial Population**: Generates random integer candidates.
-2. **Fitness Function**: Calculates the absolute difference (error) between the current sum and the target.
-3. **Selection**: Keeps the top 50% of the best-performing candidates.
-4. **Crossover**: Combines attributes of parents to create children.
-5. **Mutation**: Randomly tweaks values to maintain genetic diversity and avoid local optima.
-
-```
-
----
-
-### 🚀 Final Sync to GitHub
-After saving the file, run these commands in your VS Code terminal to update your repository:
-
-1. **Stage the new file**: `git add README.md`
-2. **Commit the update**: `git commit -m "Added README documentation"`
-3. **Push to GitHub**: `git push`
-
-
-
-### 💡 Pro Tip for Streamlit
-Once you push this, go to your **Streamlit Cloud** dashboard. You will see it automatically re-deploying because it detected the change in your GitHub repo.
-
-**Your project is now fully documented! Would you like me to show you how to add a "Math Mode" toggle to the UI so you can switch between linear and quadratic equations?**
-
-```
+Built by [Abdul Salam](https://github.com/salamlakhan7) as a personal project exploring genetic algorithms with Python and Streamlit.
